@@ -1,0 +1,116 @@
+{% extends "principal.html" %}
+{% load bootstrap %}
+
+
+{% block content %}
+        <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Perfil de {{usuario.usuario_django}}</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-user fa-fw">Datos</i>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!-- /.panel opciones -->
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <i class="fa fa-user fa-fw">Opciones</i>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-lg-4">Eliminar Usuario:
+                                                    <a href="{% url 'usuario_delete' usuario.pk %}">
+                                                        <button class="btn btn-danger"><i class="fa fa-eraser fa-fw"></i></i>
+                                                        </button></a>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.panel Detalles Usuario -->
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <i class="fa fa-user fa-fw">Detalles Usuario</i>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="col-lg-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        Usuario: {{usuario.usuario_django}}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        {% if usuario.tipo == 0 %}
+                                                            Tipo: Dueño de local
+                                                        {% else %}
+                                                            Tipo: Usuario
+                                                        {% endif %}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <!--Cofienza el restaurante-->
+                                {% if restaurantes %}
+                                    {% for rest in restaurantes %}
+                                <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <i class="fa fa-user fa-fw">Detalles Local</i>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="col-lg-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        Usuario: {{rest.direccion}}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                       {{ rest.direccion }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                       {{ rest.valoracion }}
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   </div>
+                                    {% endfor %}
+                            {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+{% endblock %}
+{% block extrajs %}
+
+
+{% endblock %}

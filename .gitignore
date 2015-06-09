@@ -1,0 +1,5 @@
+dbsqlite
+localizacion/migrations/*_initial*
+localizacion/migrations/*_auto*
+*.pyc
+

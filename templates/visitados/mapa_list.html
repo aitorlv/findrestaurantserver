@@ -1,0 +1,76 @@
+{% extends "principal.html" %}
+{% load tags_usuario %}
+
+{% block extracss %}
+    <!-- Page-Level Plugin CSS - Tables -->
+    <link href="{{ STATIC_URL }}css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+        <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Restaurantes</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-user fa-fw"></i> Restaurantes del sistema
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                          <div id="googleMap" class="col-lg-12" style="height: 400px;" ></div>
+                        <!-- /.panel-body -->
+                    </div>
+
+                </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block extrajs %}
+    <script
+src="http://maps.googleapis.com/maps/api/js">
+</script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#usuarios-list').dataTable({
+            "oLanguage": {
+			    "sUrl": "{{ STATIC_URL }}datatables/i18n/es_ES.txt"
+		    }
+
+        });
+        initialize();
+    });
+
+    var centro=new google.maps.LatLng(51.5286417,-0.1015987);
+    function initialize() {
+            var mapProp = {
+              center:centro,
+              zoom:5,
+              mapTypeId:google.maps.MapTypeId.ROADMAP
+              };
+
+        var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+        {% for val in valoraciones %}
+            var myCenter{{ forloop.counter }}=new google.maps.LatLng({{ val.restaurante.longitud}},{{ val.restaurante.latitud}});
+        var marker{{ forloop.counter }}=new google.maps.Marker({
+
+              position:myCenter{{ forloop.counter }},
+              animation:google.maps.Animation.BOUNCE
+            });
+
+            marker{{ forloop.counter }}.setMap(map);
+        {% endfor %}
+    }
+
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+{% endblock %}

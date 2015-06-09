@@ -1,0 +1,99 @@
+{% extends "principal.html" %}
+{% load tags_usuario %}
+
+{% block extracss %}
+    <!-- Page-Level Plugin CSS - Tables -->
+    <link href="{{ STATIC_URL }}css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    {% if user|get_tipo_usuario:3%}
+        <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Usuarios</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <i class="fa fa-user fa-fw"></i> Usuarios del sistema
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    {% if usuarios %}
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped" id="usuarios-list">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Usuario</th>
+                                                    <th>Estado</th>
+                                                    <th>Tipo</th>
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for a in usuarios %}
+                                                    <tr>
+                                                        <td class="">{{ forloop.counter }}</td>
+                                                        <td class=""><a href="{%url 'usuario_perfil' a.pk %}">{{ a.usuario_django }}</a></td>
+
+                                                        {% if a.conectado %}
+                                                            <td class=""><i class=" btn btn-success fa fa-user "></i></td>
+                                                        {% else %}
+                                                            <td class=""><i class=" btn btn-danger fa fa-user "></i></td>
+                                                        {% endif %}
+
+                                                    {% if a.tipo == 0 %}
+                                                            <td class="">Dueño</td>
+                                                        {% elif a.tipo == 1%}
+                                                            <td class="">Usuario</td>
+                                                     {% else %}
+                                                        <td class="">Administrador</td>
+
+                                                    {% endif %}
+
+
+
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.table-responsive -->
+                                    {% else %}
+                                        <p>No hay Usuarios. Registrelos <a href="">aquí</a>.</p>
+                                    {% endif %}
+                                </div>
+
+                                <!-- /.col-lg-8 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+
+                </div>
+        </div>
+{% endif %}
+{% endblock %}
+
+        {% block extrajs %}
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#usuarios-list').dataTable({
+            "oLanguage": {
+			    "sUrl": "{{ STATIC_URL }}datatables/i18n/es_ES.txt"
+		    }
+
+        });
+    });
+    </script>
+{% endblock %}
